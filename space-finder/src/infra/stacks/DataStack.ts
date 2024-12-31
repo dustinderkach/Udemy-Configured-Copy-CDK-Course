@@ -22,7 +22,8 @@ export class DataStack extends Stack {
                 allowedMethods: [
                     HttpMethods.HEAD,
                     HttpMethods.GET,
-                    HttpMethods.PUT
+                    HttpMethods.PUT,
+                    HttpMethods.POST
                 ],
                 allowedOrigins: ['*'],
                 allowedHeaders: ['*']
