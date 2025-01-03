@@ -24,8 +24,9 @@ export class MonitorStack extends Stack {
         const alarmTopic = new Topic(this, 'AlarmTopic', {
             displayName: 'AlarmTopic',
             topicName: 'AlarmTopic'
+
         });
-        alarmTopic.addSubscription(new LambdaSubscription(webHookLambda));
+        alarmTopic.addSubscription(new LambdaSubscription(webHookLambda));//to trigger the lambda function when the alarm is triggered
 
         const spacesApi4xxAlarm = new Alarm(this, 'spacesApi4xxAlarm', {
             metric: new Metric({
