@@ -20,7 +20,7 @@ export default function Spaces(props: SpacesProps){
             setSpaces(spaces);
         }
         getSpaces();
-    }, [])
+    }, [])//Keep the array empty to run the effect only once (otherwise it will run on every render and cost $$)
 
     async function reserveSpace(spaceId: string, spaceName: string){
         const reservationResult = await props.dataService.reserveSpace(spaceId);
