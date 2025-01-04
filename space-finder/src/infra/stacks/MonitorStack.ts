@@ -8,43 +8,49 @@ import { LambdaSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
 import { join } from "path";
 
-
-
 export class MonitorStack extends Stack {
+	constructor(scope: Construct, id: string, props?: StackProps) {
+		super(scope, id, props);
 
-    constructor(scope: Construct, id: string, props?: StackProps) {
-        super(scope, id, props);
+		const webHookLambda = new NodejsFunction(this, "webHookLambda", {
+			runtime: Runtime.NODEJS_18_X,
+			handler: "handler",
+			entry: join(
+				__dirname,
+				"..",
+				"..",
+				"services",
+				"monitor",
+				"handler.ts"
+			),
+		});
 
-        const webHookLambda = new NodejsFunction(this, 'webHookLambda', {
-            runtime: Runtime.NODEJS_18_X,
-            handler: 'handler',
-            entry: (join(__dirname, '..','..', 'services', 'monitor', 'handler.ts'))
-        });
+		const alarmTopic = new Topic(this, "AlarmTopic", {
+			displayName: "AlarmTopic",
+			topicName: "AlarmTopic",
+		});
 
-        const alarmTopic = new Topic(this, 'AlarmTopic', {
-            displayName: 'AlarmTopic',
-            topicName: 'AlarmTopic'
+        //trigger the lambda function when the alarm is triggered
+		alarmTopic.addSubscription(new LambdaSubscription(webHookLambda)); 
+        
 
-        });
-        alarmTopic.addSubscription(new LambdaSubscription(webHookLambda));//to trigger the lambda function when the alarm is triggered
-
-        const spacesApi4xxAlarm = new Alarm(this, 'spacesApi4xxAlarm', {
-            metric: new Metric({
-                metricName: '4XXError',
-                namespace: 'AWS/ApiGateway',
-                period: Duration.minutes(1),
-                statistic: 'Sum',
-                unit: Unit.COUNT,
-                dimensionsMap: {
-                    "ApiName": "SpacesApi"
-                }
-            }),
-            evaluationPeriods: 1,
-            threshold: 5,
-            alarmName: 'SpacesApi4xxAlarm'
-        });
-        const topicAction = new SnsAction(alarmTopic);
-        spacesApi4xxAlarm.addAlarmAction(topicAction);
-        spacesApi4xxAlarm.addOkAction(topicAction);
-    }
+		const spacesApi4xxAlarm = new Alarm(this, "spacesApi4xxAlarm", {
+			metric: new Metric({
+				metricName: "4XXError",
+				namespace: "AWS/ApiGateway",
+				period: Duration.minutes(1),
+				statistic: "Sum",
+				unit: Unit.COUNT,
+				dimensionsMap: {
+					ApiName: "SpacesApi",
+				},
+			}),
+			evaluationPeriods: 1,
+			threshold: 5,
+			alarmName: "SpacesApi4xxAlarm",
+		});
+		const topicAction = new SnsAction(alarmTopic);
+		spacesApi4xxAlarm.addAlarmAction(topicAction);
+		spacesApi4xxAlarm.addOkAction(topicAction);
+	}
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "test-services": "jest --config jest.services.config.ts",
     "test-infra": "jest --config jest.infra.config.ts",
-    "test": "npm run test-services && npm run test-infra",
+    "test": "jest",
     "deploy": "cdk deploy --all --outputs-file outputs.json --require-approval never"
   },
   "keywords": [],
@@ -30,7 +30,7 @@
     "@aws-sdk/credential-providers": "^3.665.0",
     "@aws-sdk/lib-dynamodb": "^3.665.0",
     "@aws-sdk/util-dynamodb": "^3.665.0",
-    "@types/jest": "^29.5.13",
+    "@types/jest": "^29.5.14",
     "@types/uuid": "^10.0.0",
     "aws-amplify": "^6.6.4",
     "aws-xray-sdk-core": "^3.10.2",
