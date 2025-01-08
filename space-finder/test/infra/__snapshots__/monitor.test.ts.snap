@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Monitor stack test suite Lambda stack snapshot 1`] = `
+exports[`Initial test suite Lambda stack snapshot 1`] = `
 {
   "webHookLambda3427ABA6": {
     "DependsOn": [
@@ -11,12 +11,7 @@ exports[`Monitor stack test suite Lambda stack snapshot 1`] = `
         "S3Bucket": {
           "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
         },
-        "S3Key": "3b873685ee5dc7fada20a039dae6af5779b71dd7aafc156e403f7031eac0599b.zip",
-      },
-      "Environment": {
-        "Variables": {
-          "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
-        },
+        "S3Key": "2e08ba1643047916bfc1e1e5b5737b44689584cc3c11d3790e2db71d30651ecd.zip",
       },
       "Handler": "index.handler",
       "Role": {
@@ -32,7 +27,7 @@ exports[`Monitor stack test suite Lambda stack snapshot 1`] = `
 }
 `;
 
-exports[`Monitor stack test suite Monitor stack snapshot 1`] = `
+exports[`Initial test suite Monitor stack snapshot 1`] = `
 {
   "Parameters": {
     "BootstrapVersion": {
@@ -88,12 +83,7 @@ exports[`Monitor stack test suite Monitor stack snapshot 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "3b873685ee5dc7fada20a039dae6af5779b71dd7aafc156e403f7031eac0599b.zip",
-        },
-        "Environment": {
-          "Variables": {
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
-          },
+          "S3Key": "2e08ba1643047916bfc1e1e5b5737b44689584cc3c11d3790e2db71d30651ecd.zip",
         },
         "Handler": "index.handler",
         "Role": {
@@ -199,7 +189,7 @@ exports[`Monitor stack test suite Monitor stack snapshot 1`] = `
 }
 `;
 
-exports[`Monitor stack test suite SnsTopic stack snapshot 1`] = `
+exports[`Initial test suite SnsTopic stack snapshot 1`] = `
 {
   "AlarmTopicD01E77F9": {
     "Properties": {
