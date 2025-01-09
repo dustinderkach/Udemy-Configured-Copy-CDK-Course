@@ -1,15 +1,7 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { handler } from "../../../src/services/spaces/handler";
 
-
-const someItems = [{
-    id: {
-        S: '123'
-    },
-    location: {
-        S: 'Paris'
-    }
-}]
+///This may not be a good way to mock the DynamoDBClient, it maybe better to use the AWS SDK mock
 
 jest.mock('@aws-sdk/client-dynamodb', () => {
     return {
@@ -25,6 +17,17 @@ jest.mock('@aws-sdk/client-dynamodb', () => {
         ScanCommand: jest.fn()
     }
 });
+
+const someItems = [{
+    id: {
+        S: '123'
+    },
+    location: {
+        S: 'Paris'
+    }
+}]
+
+
 
 
 describe('Spaces handler test suite', () => {
@@ -46,5 +49,9 @@ describe('Spaces handler test suite', () => {
         expect(ScanCommand).toHaveBeenCalledTimes(1);
     });
 
+    afterAll(() => {     
+        jest.clearAllMocks();
+        jest.restoreAllMocks();   
+   });
 
 })

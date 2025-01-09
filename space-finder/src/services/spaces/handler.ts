@@ -12,8 +12,11 @@ import { JsonError, MissingFieldError } from "../shared/Validator";
 import { addCorsHeader } from "../shared/Utils";
 import { captureAWSv3Client, getSegment } from "aws-xray-sdk-core";
 
-const ddbClient = captureAWSv3Client(new DynamoDBClient({}));
-
+//const ddbClient = captureAWSv3Client(new DynamoDBClient({}));
+const ddbClient = captureAWSv3Client
+	? captureAWSv3Client(new DynamoDBClient({}))
+	: new DynamoDBClient({});
+	
 async function handler(
 	event: APIGatewayProxyEvent,
 	context: Context
